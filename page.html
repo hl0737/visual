@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body, html {
+      margin: 0px;
+      padding: 0px;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+<style>
+body {
+  background-image: url('background4.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  /* position: absolute;
+  height: 100%;
+  width: 100%; */
+}
+</style>
+<canvas id="myCanvas" width="1000" height="800  "></canvas>
+<script>
+  function loadImages(sources, callback) {
+    var images = {};
+    var loadedImages = 0;
+    var numImages = 0;
+    // get num of sources
+    for(var src in sources) {
+      numImages++;
+    }
+    for(var src in sources) {
+      images[src] = new Image();
+      images[src].onload = function() {
+        if(++loadedImages >= numImages) {
+          callback(images);
+        }
+      };
+      images[src].src = sources[src];
+    }
+  }
+  var canvas = document.getElementById('myCanvas'),
+  context = canvas.getContext('2d');
+
+  var sources = {
+    img1: 'skt/1_khan.png',
+    img2: 'skt/2_clid.png',
+    img3: 'skt/3_faker.png',
+    img4: 'skt/4_teddy.png',
+    img5: 'skt/5_effort.png',
+    img6: 'skt/6_mata.png',
+    img7: 'skt/lck.png',
+    img8: 'skt/skt.png',
+  };
+
+  loadImages(sources, function(images) {
+    context.drawImage(images.img1, 150, 260, 100, 100);
+    context.drawImage(images.img2, 275, 260, 100, 100);
+    context.drawImage(images.img3, 400, 252, 108, 108);
+    context.drawImage(images.img4, 525, 260, 100, 100);
+    context.drawImage(images.img5, 650, 260, 100, 100);
+    context.drawImage(images.img6, 775, 260, 100, 100);
+    context.drawImage(images.img7, 775, 70, 100, 100);
+    context.drawImage(images.img8, 100, 42, 150, 150);
+  });
+
+  context.font = "12px Arial";
+  context.fillText("Khan - Top", 175, 380);
+  context.fillText("Clid - Jungle", 300, 380);
+  context.fillText("Faker - Mid", 425, 380);
+  context.fillText("Teddy - ADC", 550, 380);
+  context.fillText("Effort - Support", 675, 380);
+  context.fillText("Mata - Sub", 800, 380);
+  context.fillText("LCK 1st seed", 875, 70);
+
+
+</script>
+</body>
+</html>

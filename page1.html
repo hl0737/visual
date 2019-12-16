@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+  </style>
+</head>
+<body>
+<style>
+body {
+  background-image: url('');
+}
+</style>
+<canvas id="myCanvas" width="1000" height="800  "></canvas>
+<script>
+  function loadImages(sources, callback) {
+    var images = {};
+    var loadedImages = 0;
+    var numImages = 0;
+    // get num of sources
+    for(var src in sources) {
+      numImages++;
+    }
+    for(var src in sources) {
+      images[src] = new Image();
+      images[src].onload = function() {
+        if(++loadedImages >= numImages) {
+          callback(images);
+        }
+      };
+      images[src].src = sources[src];
+    }
+  }
+  var canvas = document.getElementById('myCanvas'),
+  context = canvas.getContext('2d');
+
+  var sources = {
+    img1: 'fnc/1_bwipo.png',
+    img2: 'fnc/2_broxah.png',
+    img3: 'fnc/3_nemesis.png',
+    img4: 'fnc/4_rekkles.png',
+    img5: 'fnc/5_hylissang.png',
+    img6: 'fnc/6_dan.png',
+    img7: 'fnc/lec.png',
+    img8: 'fnc/fnc.png',
+  };
+
+  loadImages(sources, function(images) {
+    context.drawImage(images.img1, 150, 260, 100, 100);
+    context.drawImage(images.img2, 275, 260, 100, 100);
+    context.drawImage(images.img3, 400, 260, 100, 100);
+    context.drawImage(images.img4, 525, 260, 100, 100);
+    context.drawImage(images.img5, 650, 260, 100, 100);
+    context.drawImage(images.img6, 775, 260, 100, 100);
+    context.drawImage(images.img7, 775, 70, 150, 100);
+    context.drawImage(images.img8, 100, 42, 150, 150);
+  });
+
+  context.font = "10px Arial";
+  context.fillText("Bwipo - Top", 175, 380);
+  context.fillText("Broxah - Jungle", 300, 380);
+  context.fillText("Nemesis - Mid", 425, 380);
+  context.fillText("Rekkles - ADC", 550, 380);
+  context.fillText("Hylissang - Support", 675, 380);
+  context.fillText("Dan - Sub", 800, 380);
+  context.fillText("LEC 2nd seed", 875, 70);
+
+
+</script>
+</body>
+</html>
