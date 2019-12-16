@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script type="text/javascript" src="echarts.js"></script>
+
   <style>
     body, html {
       margin: 0px;
       padding: 0px;
       height: 100%;
+    }
+
+    canvas {
+      z-index: -1;
+      position: absolute;
+    }
+
+    #radar {
+      position: absolute;
+      top:220px;
+      right: 180px;
+      float:right;
+    }
+
+    #pie {
+      left:300px;
+      top: 400px;
     }
   </style>
 </head>
@@ -14,14 +33,16 @@
 body {
   background-image: url('background4.jpeg');
   background-size: cover;
-  background-repeat: no-repeat;
-  overflow: hidden;
-  /* position: absolute;
+  /*background-repeat: no-repeat;*/
+  /*overflow: hidden;*/
+  /* position: absolute;*/
   height: 100%;
-  width: 100%; */
+  width: 100%;
 }
 </style>
 <canvas id="myCanvas" width="1000" height="800  "></canvas>
+<div id="radar" style="width:450px ; height:400px;"></div>
+<div id="pie" style="width: 450px;height: 400px;"></div>
 <script>
   function loadImages(sources, callback) {
     var images = {};
@@ -75,6 +96,118 @@ body {
   context.fillText("Mata - Sub", 800, 380);
   context.fillText("LCK 1st seed", 875, 70);
 
+
+</script>
+<script type="text/javascript">
+
+  var optionRadar = {
+    radar: {
+      name: {
+        textStyle: {
+          color: 'black',
+          backgroundColor: '#e0e0e0',
+          borderRadius: 3,
+          padding: [3, 5]
+        }
+      },
+      indicator: [
+        {name: '分均输出', max: 2124},
+        {name: '分均经济', max: 1973},
+        {name: '分均补刀', max: 35},
+        {name: '一血率', max: 100},
+        {name: '场均推塔', max: 8},
+        {name: '大龙控制率', max: 100}
+      ]
+    },
+    series: [{
+      type: 'radar',
+      areaStyle: {normal: {}},
+      data: [
+        {name: "能力值", value: [1782.7, 1870.6, 35, 59, 7.3, 60]}
+      ]
+    }]
+  };
+
+  var optionPie = {
+    backgroundColor: '#ff787878',
+
+    title: {
+      text: '选手分均伤害',
+      left: 'center',
+      top: 20,
+      textStyle: {
+        color: '#fff'
+      }
+    },
+
+    tooltip: {
+      trigger: 'item',
+      formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+
+    visualMap: {
+      show: false,
+      min: 80,
+      max: 600,
+      inRange: {
+        colorLightness: [0, 1]
+      }
+    },
+    series: [
+      {
+        name: '分均伤害',
+        type: 'pie',
+        radius: '55%',
+        center: ['50%', '50%'],
+        data: [
+          {value: 507.7, name: 'Khan'},
+          {value: 285, name: 'Clid'},
+          {value: 403.2, name: 'Faker'},
+          {value: 443.8, name: 'Teddy'},
+          {value: 132.8, name: 'Effort'},
+          {value: 134.9, name: 'Mata'}
+        ].sort(function (a, b) {
+          return a.value - b.value;
+        }),
+        roseType: 'radius',
+        label: {
+          normal: {
+            textStyle: {
+              color: '#fff'
+            }
+          }
+        },
+        labelLine: {
+          normal: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, 0.3)'
+            },
+            smooth: 0.2,
+            length: 10,
+            length2: 20
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: '#c23531',
+            shadowBlur: 200,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        },
+
+        animationType: 'scale',
+        animationEasing: 'elasticOut',
+        animationDelay: function (idx) {
+          return Math.random() * 200;
+        }
+      }
+    ]
+  };
+
+  var radarChart = echarts.init(document.getElementById('radar'));
+  radarChart.setOption(optionRadar);
+  var pieChart = echarts.init(document.getElementById('pie'));
+  pieChart.setOption(optionPie);
 
 </script>
 </body>
