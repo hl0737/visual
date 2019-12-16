@@ -46,11 +46,11 @@ body {
   function loadImages(sources, callback) {
     var images = {};
     var loadedImages = 0;
-    var numImages = 0;
+    var numImages = 8;
     // get num of sources
-    for(var src in sources) {
-      numImages++;
-    }
+    // for(var src in sources) {
+    //   numImages++;
+    // }
     for(var src in sources) {
       images[src] = new Image();
       images[src].onload = function() {
@@ -63,8 +63,7 @@ body {
   }
   var canvas = document.getElementById('myCanvas'),
   context = canvas.getContext('2d');
-
-  var sources = {
+  var skt = {
     img1: 'skt/1_khan.png',
     img2: 'skt/2_clid.png',
     img3: 'skt/3_faker.png',
@@ -74,7 +73,76 @@ body {
     img7: 'skt/lck.png',
     img8: 'skt/skt.png',
   };
-
+  var fnc = {
+    img1: 'fnc/1_bwipo.png',
+    img2: 'fnc/2_broxah.png',
+    img3: 'fnc/3_nemesis.png',
+    img4: 'fnc/4_rekkles.png',
+    img5: 'fnc/5_hylissang.png',
+    img6: 'fnc/6_dan.png',
+    img7: 'fnc/lec.png',
+    img8: 'fnc/fnc.png',
+  };
+  var rng = {
+    img1: 'rng/1_langx.png',
+    img2: 'rng/2_karsa.png',
+    img3: 'rng/3_xiaohu.png',
+    img4: 'rng/4_uzi.png',
+    img5: 'rng/5_ming.png',
+    img6: 'rng/6_amazingj.png',
+    img7: 'rng/lpl.png',
+    img8: 'rng/rng.png',
+  };
+  var cg = {
+    img1: 'cg/1_huni.png',
+    img2: 'cg/2_lira.png',
+    img3: 'cg/3_damonte.png',
+    img4: 'cg/4_codysun.png',
+    img5: 'cg/5_vulcan.png',
+    img6: 'cg/6_rodov.png',
+    img7: 'cg/cg.png',
+    img8: 'cg/lcs.png',
+  };
+  var ig = {
+    img1: 'ig/1_theshy.png',
+    img2: 'ig/2_ning.png',
+    img3: 'ig/3_rookie.png',
+    img4: 'ig/4_jackeylove.png',
+    img5: 'ig/5_baolan.png',
+    img6: 'ig/6_leyan.png',
+    img7: 'ig/lpl.png',
+    img8: 'ig/ig.png',
+  };
+  var dwg = {
+    img1: 'dwg/1_nuguri.png',
+    img2: 'dwg/2_canyon.png',
+    img3: 'dwg/3_showmaker.png',
+    img4: 'dwg/4_nuclear.png',
+    img5: 'dwg/5_beryl.png',
+    img6: 'dwg/6_flame.png',
+    img7: 'dwg/lck.png',
+    img8: 'dwg/dwg.png',
+  };
+  var tl = {
+    img1: 'tl/1_impact.png',
+    img2: 'tl/2_xmithie.png',
+    img3: 'tl/3_jensen.png',
+    img4: 'tl/4_doublelift.png',
+    img5: 'tl/5_corejj.png',
+    img6: 'tl/6_matt.png',
+    img7: 'tl/lcs.png',
+    img8: 'tl/tl.png',
+  };
+  var ahq = {
+    img1: 'ahq/1_ziv.png',
+    img2: 'ahq/2_alex.png',
+    img3: 'ahq/3_apex.png',
+    img4: 'ahq/4_an.png',
+    img5: 'ahq/5_rainbow.png',
+    img6: 'ahq/6_wako.png',
+    img7: 'ahq/lms.png',
+    img8: 'ahq/ahq.png',
+  };
   loadImages(sources, function(images) {
     context.drawImage(images.img1, 150, 260, 100, 100);
     context.drawImage(images.img2, 275, 260, 100, 100);
@@ -85,7 +153,6 @@ body {
     context.drawImage(images.img7, 775, 70, 100, 100);
     context.drawImage(images.img8, 100, 42, 150, 150);
   });
-
   context.font = "12px Arial";
   context.fillText("Khan - Top", 175, 380);
   context.fillText("Clid - Jungle", 300, 380);
@@ -93,9 +160,7 @@ body {
   context.fillText("Teddy - ADC", 550, 380);
   context.fillText("Effort - Support", 675, 380);
   context.fillText("Mata - Sub", 800, 380);
-  context.fillText("LCK 1st seed", 875, 70);
-
-
+  //context.fillText("LCK 1st seed", 875, 70);
 </script>
 <script type="text/javascript">
 
