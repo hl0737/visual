@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <title>{{ team_name }}</title>
+  <style>
+    body, html {
+      margin: 0px;
+      padding: 0px;
+      height: 100%;
+    }
+
+    canvas {
+      z-index: -1;
+      position: absolute;
+    }
+
+    #radar {
+      position: absolute;
+      top:220px;
+      left: 900px;
+    }
+
+    #pie {
+      left:300px;
+      top: 400px;
+    }
+  </style>
+</head>
+<body>
+<style>
+body {
+  background-image: url('../static/background.jpeg');
+  background-size: cover;
+  /*background-repeat: no-repeat;*/
+  /*overflow: hidden;*/
+  /* position: absolute;*/
+  height: 100%;
+  width: 100%;
+}
+</style>
+<canvas id="myCanvas" width="1000" height="800  "></canvas>
+<div id="radar" style="width:450px ; height:400px;"></div>
+<div id="pie" style="width: 450px;height: 400px;"></div>
+<script>
+  function loadImages(sources, callback) {
+    var images = {};
+    var loadedImages = 0;
+    var numImages = 8;
+    // get num of sources
+    // for(var src in sources) {
+    //   numImages++;
+    // }
+    //57，64 和 236行都有sources。sources变成队名就可以换图片. 比如 SKT
+    var team;
+    switch (sources) {
+        case 'C9':
+            team = C9;
+            break;
+        case 'FPX':
+            team = FPX;
+            break;
+        case 'G2':
+            team = G2;
+            break;
+        case 'GAM':
+            team = GAM;
+            break;
+        case 'GRF':
+            team = GRF;
+            break;
+        case 'HKA':
+            team = HKA;
+            break;
+        case 'JT':
+            team = JT;
+            break;
+        case 'SPY':
+            team = SPY;
+            break;
+        case 'SKT':
+            team = SKT;
+            break;
+        case 'FNC':
+            team = FNC;
+            break;
+        case 'RNG':
+            team = RNG;
+            break;
+        case 'CG':
+            team = CG;
+            break;
+        case 'IG':
+            team = IG;
+            break;
+        case 'DWG':
+            team = DWG;
+            break;
+        case 'TL':
+            team = TL;
+            break;
+        case 'AHQ':
+            team = AHQ;
+            break;
+    }
+    for(var src in team) {
+      images[src] = new Image();
+      images[src].onload = function() {
+        if(++loadedImages >= numImages) {
+          callback(images);
+        }
+      };
+      images[src].src = team[src];
+    }
+  }
+  var canvas = document.getElementById('myCanvas'),
+  context = canvas.getContext('2d');
+
+  var C9 = {
+    img1: '../static/C9/top_Licorice.png',
+    img2: '../static/C9/jungle_Svenskeren.png',
+    img3: '../static/C9/mid_Nisqy.png',
+    img4: '../static/C9/ad_Deftly.png',
+    img5: '../static/C9/sup_zeyzal.png',
+    img6: '../static/C9/jungle_blaber.png',
+    img7: '../static/cg/lcs.png',
+    img8: '../static/team_icon/C9.png',
+  };
+  var FPX = {
+    img1: '../static/FPX/top_Gimgoon.png',
+    img2: '../static/FPX/jungle_Tian.png',
+    img3: '../static/FPX/mid_Doinb.png',
+    img4: '../static/FPX/ad_Lwx.png',
+    img5: '../static/FPX/sup_Crisp.png',
+    img6: '../static/FPX/sub_xinyi.png',
+    img7: '../static/rng/lpl.png',
+    img8: '../static/team_icon/FPX.png',
+  };
+  var G2 = {
+    img1: '../static/G2/top_Wunder.png',
+    img2: '../static/G2/jungle_Jankos.png',
+    img3: '../static/G2/mid_Caps.png',
+    img4: '../static/G2/ad_Perkz.png',
+    img5: '../static/G2/sup_mikyx.png',
+    img6: '../static/G2/promiseq.png',
+    img7: '../static/fnc/lec.png',
+    img8: '../static/team_icon/G2.png',
+  };
+  var GAM = {
+    img1: '../static/GAM/top_Archie.png',
+    img2: '../static/GAM/sup_Sya.png',
+    img3: '../static/GAM/mid_Zeros.png',
+    img4: '../static/GAM/ad_Zin.png',
+    img5: '../static/GAM/sup_Slay.png',
+    img6: '../static/GAM/mid_Kiaya.png',
+    img7: '../static/GAM/vcs.png',
+    img8: '../static/team_icon/GAM.png',
+  };
+
+  var GRF = {
+    img1: '../static/GRF/top_Sword.png',
+    img2: '../static/GRF/junle_Tarzan.png',
+    img3: '../static/GRF/mid_Chovy.png',
+    img4: '../static/GRF/ad_Viper.png',
+    img5: '../static/GRF/sup_Lehends.png',
+    img6: '../static/GRF/top_Doran.png',
+    img7: '../static/skt/lck.png',
+    img8: '../static/team_icon/GRF.png',
+  };
+
+  var HKA = {
+    img1: '../static/HKA/top_3z.png',
+    img2: '../static/HKA/jungle_Crash.png',
+    img3: '../static/HKA/mid_M1ssion.png',
+    img4: '../static/HKA/ad_Unified.png',
+    img5: '../static/HKA/sup_Kaiwing.png',
+    img6: '../static/HKA/ad_MnM.png',
+    img7: '../static/ahq/lms.png',
+    img8: '../static/team_icon/HKA.png',
+  };
+
+  var JT = {
+    img1: '../static/JT/top_Rest.png',
+    img2: '../static/JT/jungle_Breaker.png',
+    img3: '../static/JT/mid_fofo.png',
+    img4: '../static/JT/ad_LiIV.png',
+    img5: '../static/JT/sup_Koala.png',
+    img6: '../static/JT/jungle_Hana.png',
+    img7: '../static/ahq/lms.png',
+    img8: '../static/team_icon/JT.png',
+  };
+
+
+  var SPY = {
+    img1: '../static/SPY/top_Vizicsacsi.png',
+    img2: '../static/SPY/jungle_Sharp.png',
+    img3: '../static/SPY/mid_Humanoid.png',
+    img4: '../static/SPY/ad_Kobbe.png',
+    img5: '../static/SPY/sup_Tore.png',
+    img6: '../static/SPY/top_Orome.png',
+    img7: '../static/fnc/lec.png',
+    img8: '../static/team_icon/SPY.png',
+  };
+
+  var SKT = {
+    img1: '../static/skt/1_khan.png',
+    img2: '../static/skt/2_clid.png',
+    img3: '../static/skt/3_faker.png',
+    img4: '../static/skt/4_teddy.png',
+    img5: '../static/skt/5_effort.png',
+    img6: '../static/skt/6_mata.png',
+    img7: '../static/skt/lck.png',
+    img8: '../static/team_icon/T1.png',
+  };
+  var FNC = {
+    img1: '../static/fnc/1_bwipo.png',
+    img2: '../static/fnc/2_broxah.png',
+    img3: '../static/fnc/3_nemesis.png',
+    img4: '../static/fnc/4_rekkles.png',
+    img5: '../static/fnc/5_hylissang.png',
+    img6: '../static/fnc/6_dan.png',
+    img7: '../static/fnc/lec.png',
+    img8: '../static/team_icon/FNC.png',
+  };
+  var RNG = {
+    img1: '../static/rng/1_langx.png',
+    img2: '../static/rng/2_karsa.png',
+    img3: '../static/rng/3_xiaohu.png',
+    img4: '../static/rng/4_uzi.png',
+    img5: '../static/rng/5_ming.png',
+    img6: '../static/rng/6_amazingj.png',
+    img7: '../static/rng/lpl.png',
+    img8: '../static/team_icon/RNG.png',
+  };
+  var CG = {
+    img1: '../static/cg/1_huni.png',
+    img2: '../static/cg/2_lira.png',
+    img3: '../static/cg/3_damonte.png',
+    img4: '../static/cg/4_codysun.png',
+    img5: '../static/cg/5_vulcan.png',
+    img6: '../static/cg/6_rodov.png',
+    img7: '../static/cg/lcs.png',
+    img8: '../static/team_icon/CG.png',
+  };
+  var IG = {
+    img1: '../static/ig/1_theshy.png',
+    img2: '../static/ig/2_ning.png',
+    img3: '../static/ig/3_rookie.png',
+    img4: '../static/ig/4_jackeylove.png',
+    img5: '../static/ig/5_baolan.png',
+    img6: '../static/ig/6_leyan.png',
+    img7: '../static/ig/lpl.png',
+    img8: '../static/team_icon/IG.png',
+  };
+  var DWG = {
+    img1: '../static/dwg/1_nuguri.png',
+    img2: '../static/dwg/2_canyon.png',
+    img3: '../static/dwg/3_showmaker.png',
+    img4: '../static/dwg/4_nuclear.png',
+    img5: '../static/dwg/5_beryl.png',
+    img6: '../static/dwg/6_flame.png',
+    img7: '../static/dwg/lck.png',
+    img8: '../static/team_icon/DWG.png',
+  };
+  var TL = {
+    img1: '../static/tl/1_impact.png',
+    img2: '../static/tl/2_xmithie.png',
+    img3: '../static/tl/3_jensen.png',
+    img4: '../static/tl/4_doublelift.png',
+    img5: '../static/tl/5_corejj.png',
+    img6: '../static/tl/6_matt.png',
+    img7: '../static/tl/lcs.png',
+    img8: '../static/team_icon/TL.png',
+  };
+  var AHQ = {
+    img1: '../static/ahq/1_ziv.png',
+    img2: '../static/ahq/2_alex.png',
+    img3: '../static/ahq/3_apex.png',
+    img4: '../static/ahq/4_an.png',
+    img5: '../static/ahq/5_rainbow.png',
+    img6: '../static/ahq/6_wako.png',
+    img7: '../static/ahq/lms.png',
+    img8: '../static/team_icon/AHQ.png',
+  };
+   var which = {{ team_name|tojson }}; // 这个后面用传参的来表示
+  if(which == 'T1') which = 'SKT';
+  loadImages(which, function(images) {
+    context.drawImage(images.img1, 150, 260, 100, 100);
+    context.drawImage(images.img2, 275, 260, 100, 100);
+    context.drawImage(images.img3, 400, 252, 108, 108);
+    context.drawImage(images.img4, 525, 260, 100, 100);
+    context.drawImage(images.img5, 650, 260, 100, 100);
+    context.drawImage(images.img6, 775, 260, 100, 100);
+    context.drawImage(images.img7, 775, 70, 130, 110);
+    context.drawImage(images.img8, 100, 42, 150, 150);
+  });
+  context.font = "12px Arial";
+  context.fillText("Top", 185, 380);
+  context.fillText("Jungle", 310, 380);
+  context.fillText("Mid", 445, 380);
+  context.fillText("ADC", 560, 380);
+  context.fillText("Support", 675, 380);
+  context.fillText("Sub", 810, 380);
+  //context.fillText("LCK 1st seed", 875, 70);
+    // radar chart
+    $.getJSON('../static/radar/' + which + '.json', function (data) {
+        var optionRadar = {
+            radar: {
+                name: {
+                    textStyle: {
+                        color: 'black',
+                        backgroundColor: '#e0e0e0',
+                        borderRadius: 3,
+                        padding: [3, 5]
+                    }
+                },
+                indicator: [
+                    {name: '分均输出', max: 2124},
+                    {name: '分均经济', max: 1973},
+                    {name: '分均补刀', max: 35},
+                    {name: '一血率', max: 100},
+                    {name: '场均推塔', max: 8},
+                    {name: '大龙控制率', max: 100}
+                ]
+            },
+            series: [{
+                type: 'radar',
+                areaStyle: {normal: {}},
+                data: [
+                    {name: "能力值", value: data}
+                ]
+            }]
+        };
+        var radarChart = echarts.init(document.getElementById('radar'));
+        radarChart.setOption(optionRadar);
+    });
+    // pie chart
+    $.getJSON('../static/pie/' + which + '.json', function (jsonData) {
+        var optionPie = {
+            backgroundColor: '#ff787878',
+            title: {
+                text: '选手分均伤害',
+                left: 'center',
+                top: 20,
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            visualMap: {
+                show: false,
+                min: 80,
+                max: 600,
+                inRange: {
+                    colorLightness: [0, 1]
+                }
+            },
+            series: [
+                {
+                    name: '分均伤害',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '50%'],
+                    data: jsonData.sort(function (a, b) {
+                        return a.value - b.value;
+                    }),
+                    roseType: 'radius',
+                    label: {
+                        normal: {
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            lineStyle: {
+                                color: 'rgba(255, 255, 255, 0.3)'
+                            },
+                            smooth: 0.2,
+                            length: 10,
+                            length2: 20
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#c23531',
+                            shadowBlur: 200,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    animationType: 'scale',
+                    animationEasing: 'elasticOut',
+                    animationDelay: function (idx) {
+                        return Math.random() * 200;
+                    }
+                }
+            ]
+        };
+        var pieChart = echarts.init(document.getElementById('pie'));
+        pieChart.setOption(optionPie);
+    });
+
+</script>
+</body>
+</html>
