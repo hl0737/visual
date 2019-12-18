@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="echarts.js"></script>
+  <script type="text/javascript" src="jquery.js"></script>
+
+  <style>
+    body, html {
+      margin: 0px;
+      padding: 0px;
+      height: 100%;
+    }
+
+    canvas {
+      z-index: -1;
+      position: absolute;
+    }
+
+    #radar {
+      position: absolute;
+      top:220px;
+      left: 900px;
+    }
+
+    #pie {
+      left:300px;
+      top: 400px;
+    }
+  </style>
+</head>
+<body>
+<style>
+body {
+  background-image: url('background.jpeg');
+  background-size: cover;
+  /*background-repeat: no-repeat;*/
+  /*overflow: hidden;*/
+  /* position: absolute;*/
+  height: 100%;
+  width: 100%;
+}
+</style>
+<canvas id="myCanvas" width="1000" height="800  "></canvas>
+<div id="radar" style="width:450px ; height:400px;"></div>
+<div id="pie" style="width: 450px;height: 400px;"></div>
+<script>
+  function loadImages(sources, callback) {
+    var images = {};
+    var loadedImages = 0;
+    var numImages = 8;
+    // get num of sources
+    // for(var src in sources) {
+    //   numImages++;
+    // }
+    //57，64 和 236行都有sources。sources变成队名就可以换图片. 比如 SKT
+    for(var src in SKT) {
+      images[src] = new Image();
+      images[src].onload = function() {
+        if(++loadedImages >= numImages) {
+          callback(images);
+        }
+      };
+      images[src].src = SKT[src];
+    }
+  }
+  var canvas = document.getElementById('myCanvas'),
+  context = canvas.getContext('2d');
+
+  var C9 = {
+    img1: 'C9/top_Licorice.png',
+    img2: 'C9/jungle_Svenskeren.png',
+    img3: 'C9/mid_Nisqy.png',
+    img4: 'C9/ad_Deftly.png',
+    img5: 'C9/sup_zeyzal.png',
+    img6: 'C9/jungle_blaber.png',
+    img7: 'cg/lcs.png',
+    img8: '队伍图标/C9.png',
+  };
+  var FPX = {
+    img1: 'FPX/top_Gimgoon.png',
+    img2: 'FPX/jungle_Tian.png',
+    img3: 'FPX/mid_Doinb.png',
+    img4: 'FPX/ad_Lwx.png',
+    img5: 'FPX/sup_Crisp.png',
+    img6: 'FPX/sub_xinyi.png',
+    img7: 'rng/lpl.png',
+    img8: '队伍图标/FPX.png',
+  };
+  var G2 = {
+    img1: 'G2/top_Wunder.png',
+    img2: 'G2/jungle_Jankos.png',
+    img3: 'G2/mid_Caps.png',
+    img4: 'G2/ad_Perkz.png',
+    img5: 'G2/sup_mikyx.png',
+    img6: 'G2/promiseq.png',
+    img7: 'fnc/lec.png',
+    img8: '队伍图标/G2.png',
+  };
+  var GAM = {
+    img1: 'GAM/top_Archie.png',
+    img2: 'GAM/sup_Sya.png',
+    img3: 'GAM/mid_Zeros.png',
+    img4: 'GAM/ad_Zin.png',
+    img5: 'GAM/sup_Slay.png',
+    img6: 'GAM/mid_Kiaya.png',
+    img7: 'GAM/vcs.png',
+    img8: '队伍图标/GAM.png',
+  };
+
+  var GRF = {
+    img1: 'GRF/top_Sword.png',
+    img2: 'GRF/junle_Tarzan.png',
+    img3: 'GRF/mid_Chovy.png',
+    img4: 'GRF/ad_Viper.png',
+    img5: 'GRF/sup_Lehends.png',
+    img6: 'GRF/top_Doran.png',
+    img7: 'skt/lck.png',
+    img8: '队伍图标/GRF.png',
+  };
+
+  var HKA = {
+    img1: 'HKA/top_3z.png',
+    img2: 'HKA/jungle_Crash.png',
+    img3: 'HKA/mid_M1ssion.png',
+    img4: 'HKA/ad_Unified.png',
+    img5: 'HKA/sup_Kaiwing.png',
+    img6: 'HKA/ad_MnM.png',
+    img7: 'ahq/lms.png',
+    img8: '队伍图标/HKA.png',
+  };
+
+  var JT = {
+    img1: 'JT/top_Rest.png',
+    img2: 'JT/jungle_Breaker.png',
+    img3: 'JT/mid_fofo.png',
+    img4: 'JT/ad_LiIV.png',
+    img5: 'JT/sup_Koala.png',
+    img6: 'JT/jungle_Hana.png',
+    img7: 'ahq/lms.png',
+    img8: '队伍图标/JT.png',
+  };
+
+
+  var SPY = {
+    img1: 'SPY/top_Vizicsacsi.png',
+    img2: 'SPY/jungle_Sharp.png',
+    img3: 'SPY/mid_Humanoid.png',
+    img4: 'SPY/ad_Kobbe.png',
+    img5: 'SPY/sup_Tore.png',
+    img6: 'SPY/top_Orome.png',
+    img7: 'fnc/lec.png',
+    img8: '队伍图标/SPY.png',
+  };
+
+  var SKT = {
+    img1: 'skt/1_khan.png',
+    img2: 'skt/2_clid.png',
+    img3: 'skt/3_faker.png',
+    img4: 'skt/4_teddy.png',
+    img5: 'skt/5_effort.png',
+    img6: 'skt/6_mata.png',
+    img7: 'skt/lck.png',
+    img8: '队伍图标/T1.png',
+  };
+  var FNC = {
+    img1: 'fnc/1_bwipo.png',
+    img2: 'fnc/2_broxah.png',
+    img3: 'fnc/3_nemesis.png',
+    img4: 'fnc/4_rekkles.png',
+    img5: 'fnc/5_hylissang.png',
+    img6: 'fnc/6_dan.png',
+    img7: 'fnc/lec.png',
+    img8: '队伍图标/FNC.png',
+  };
+  var RNG = {
+    img1: 'rng/1_langx.png',
+    img2: 'rng/2_karsa.png',
+    img3: 'rng/3_xiaohu.png',
+    img4: 'rng/4_uzi.png',
+    img5: 'rng/5_ming.png',
+    img6: 'rng/6_amazingj.png',
+    img7: 'rng/lpl.png',
+    img8: '队伍图标/RNG.png',
+  };
+  var CG = {
+    img1: 'cg/1_huni.png',
+    img2: 'cg/2_lira.png',
+    img3: 'cg/3_damonte.png',
+    img4: 'cg/4_codysun.png',
+    img5: 'cg/5_vulcan.png',
+    img6: 'cg/6_rodov.png',
+    img7: 'cg/lcs.png',
+    img8: '队伍图标/CG.png',
+  };
+  var IG = {
+    img1: 'ig/1_theshy.png',
+    img2: 'ig/2_ning.png',
+    img3: 'ig/3_rookie.png',
+    img4: 'ig/4_jackeylove.png',
+    img5: 'ig/5_baolan.png',
+    img6: 'ig/6_leyan.png',
+    img7: 'ig/lpl.png',
+    img8: '队伍图标/IG.png',
+  };
+  var DWG = {
+    img1: 'dwg/1_nuguri.png',
+    img2: 'dwg/2_canyon.png',
+    img3: 'dwg/3_showmaker.png',
+    img4: 'dwg/4_nuclear.png',
+    img5: 'dwg/5_beryl.png',
+    img6: 'dwg/6_flame.png',
+    img7: 'dwg/lck.png',
+    img8: '队伍图标/DWG.png',
+  };
+  var TL = {
+    img1: 'tl/1_impact.png',
+    img2: 'tl/2_xmithie.png',
+    img3: 'tl/3_jensen.png',
+    img4: 'tl/4_doublelift.png',
+    img5: 'tl/5_corejj.png',
+    img6: 'tl/6_matt.png',
+    img7: 'tl/lcs.png',
+    img8: '队伍图标/TL.png',
+  };
+  var AHQ = {
+    img1: 'ahq/1_ziv.png',
+    img2: 'ahq/2_alex.png',
+    img3: 'ahq/3_apex.png',
+    img4: 'ahq/4_an.png',
+    img5: 'ahq/5_rainbow.png',
+    img6: 'ahq/6_wako.png',
+    img7: 'ahq/lms.png',
+    img8: '队伍图标/AHQ.png',
+  };
+  loadImages(SKT, function(images) {
+    context.drawImage(images.img1, 150, 260, 100, 100);
+    context.drawImage(images.img2, 275, 260, 100, 100);
+    context.drawImage(images.img3, 400, 252, 108, 108);
+    context.drawImage(images.img4, 525, 260, 100, 100);
+    context.drawImage(images.img5, 650, 260, 100, 100);
+    context.drawImage(images.img6, 775, 260, 100, 100);
+    context.drawImage(images.img7, 775, 70, 130, 110);
+    context.drawImage(images.img8, 100, 42, 150, 150);
+  });
+  context.font = "12px Arial";
+  context.fillText("Top", 185, 380);
+  context.fillText("Jungle", 310, 380);
+  context.fillText("Mid", 445, 380);
+  context.fillText("ADC", 560, 380);
+  context.fillText("Support", 675, 380);
+  context.fillText("Sub", 810, 380);
+  //context.fillText("LCK 1st seed", 875, 70);
+</script>
+<script type="text/javascript">
+    var which = "IG"; // 这个后面用传参的来表示
+    // radar chart
+    $.getJSON('radar/' + which + '.json', function (data) {
+        var optionRadar = {
+            radar: {
+                name: {
+                    textStyle: {
+                        color: 'black',
+                        backgroundColor: '#e0e0e0',
+                        borderRadius: 3,
+                        padding: [3, 5]
+                    }
+                },
+                indicator: [
+                    {name: '分均输出', max: 2124},
+                    {name: '分均经济', max: 1973},
+                    {name: '分均补刀', max: 35},
+                    {name: '一血率', max: 100},
+                    {name: '场均推塔', max: 8},
+                    {name: '大龙控制率', max: 100}
+                ]
+            },
+            series: [{
+                type: 'radar',
+                areaStyle: {normal: {}},
+                data: [
+                    {name: "能力值", value: data}
+                ]
+            }]
+        };
+        var radarChart = echarts.init(document.getElementById('radar'));
+        radarChart.setOption(optionRadar);
+    });
+    // pie chart
+    $.getJSON('pie/' + which + '.json', function (jsonData) {
+        var optionPie = {
+            backgroundColor: '#ff787878',
+            title: {
+                text: '选手分均伤害',
+                left: 'center',
+                top: 20,
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            visualMap: {
+                show: false,
+                min: 80,
+                max: 600,
+                inRange: {
+                    colorLightness: [0, 1]
+                }
+            },
+            series: [
+                {
+                    name: '分均伤害',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '50%'],
+                    data: jsonData.sort(function (a, b) {
+                        return a.value - b.value;
+                    }),
+                    roseType: 'radius',
+                    label: {
+                        normal: {
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            lineStyle: {
+                                color: 'rgba(255, 255, 255, 0.3)'
+                            },
+                            smooth: 0.2,
+                            length: 10,
+                            length2: 20
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#c23531',
+                            shadowBlur: 200,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    animationType: 'scale',
+                    animationEasing: 'elasticOut',
+                    animationDelay: function (idx) {
+                        return Math.random() * 200;
+                    }
+                }
+            ]
+        };
+        var pieChart = echarts.init(document.getElementById('pie'));
+        pieChart.setOption(optionPie);
+    });
+
+</script>
+</body>
+</html>
