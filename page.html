@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <script type="text/javascript" src="echarts.js"></script>
+  <script type="text/javascript" src="jquery.js"></script>
 
   <style>
     body, html {
@@ -99,33 +101,40 @@ body {
 </script>
 <script type="text/javascript">
 
-  var optionRadar = {
-    radar: {
-      name: {
-        textStyle: {
-          color: 'black',
-          backgroundColor: '#e0e0e0',
-          borderRadius: 3,
-          padding: [3, 5]
-        }
+  var which = "C9"; // 这个后面用传参的来表示
+
+  $.getJSON('radar/' + which + '.json', function(data){
+    var optionRadar = {
+      radar: {
+        name: {
+          textStyle: {
+            color: 'black',
+            backgroundColor: '#e0e0e0',
+            borderRadius: 3,
+            padding: [3, 5]
+          }
+        },
+        indicator: [
+          {name: '分均输出', max: 2124},
+          {name: '分均经济', max: 1973},
+          {name: '分均补刀', max: 35},
+          {name: '一血率', max: 100},
+          {name: '场均推塔', max: 8},
+          {name: '大龙控制率', max: 100}
+        ]
       },
-      indicator: [
-        {name: '分均输出', max: 2124},
-        {name: '分均经济', max: 1973},
-        {name: '分均补刀', max: 35},
-        {name: '一血率', max: 100},
-        {name: '场均推塔', max: 8},
-        {name: '大龙控制率', max: 100}
-      ]
-    },
-    series: [{
-      type: 'radar',
-      areaStyle: {normal: {}},
-      data: [
-        {name: "能力值", value: [1782.7, 1870.6, 35, 59, 7.3, 60]}
-      ]
-    }]
-  };
+      series: [{
+        type: 'radar',
+        areaStyle: {normal: {}},
+        data: [
+          {name: "能力值", value: data}
+        ]
+      }]
+    };
+
+    var radarChart = echarts.init(document.getElementById('radar'));
+    radarChart.setOption(optionRadar);
+  });
 
   var optionPie = {
     backgroundColor: '#ff787878',
@@ -203,8 +212,6 @@ body {
     ]
   };
 
-  var radarChart = echarts.init(document.getElementById('radar'));
-  radarChart.setOption(optionRadar);
   var pieChart = echarts.init(document.getElementById('pie'));
   pieChart.setOption(optionPie);
 
