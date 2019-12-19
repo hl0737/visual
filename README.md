@@ -1,5 +1,5 @@
-## 食用方法
-1. pip install -r requirement.txt
+## 食用方法：
+1. pip install -r requirements.txt
 2. python app.py
 3. 浏览器打开http://127.0.0.1:5000
 -------
