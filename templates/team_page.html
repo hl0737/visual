@@ -307,6 +307,7 @@ body {
     // radar chart
     $.getJSON('../static/radar/' + which + '.json', function (data) {
         var optionRadar = {
+            tooltip: {},
             radar: {
                 name: {
                     textStyle: {
@@ -329,7 +330,7 @@ body {
                 type: 'radar',
                 areaStyle: {normal: {}},
                 data: [
-                    {name: "能力值", value: data}
+                    {name: "能力值:", value: data}
                 ]
             }]
         };
